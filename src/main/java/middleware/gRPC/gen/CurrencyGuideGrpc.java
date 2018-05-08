@@ -1,18 +1,10 @@
-package middleware.grpc.gen;
+package middleware.gRPC.gen;
 
-import static io.grpc.stub.ClientCalls.asyncUnaryCall;
-import static io.grpc.stub.ClientCalls.asyncServerStreamingCall;
-import static io.grpc.stub.ClientCalls.asyncClientStreamingCall;
 import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
 import static io.grpc.stub.ClientCalls.blockingUnaryCall;
 import static io.grpc.stub.ClientCalls.blockingServerStreamingCall;
-import static io.grpc.stub.ClientCalls.futureUnaryCall;
 import static io.grpc.MethodDescriptor.generateFullMethodName;
-import static io.grpc.stub.ServerCalls.asyncUnaryCall;
-import static io.grpc.stub.ServerCalls.asyncServerStreamingCall;
-import static io.grpc.stub.ServerCalls.asyncClientStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncBidiStreamingCall;
-import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 
 /**
@@ -28,14 +20,14 @@ public final class CurrencyGuideGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<middleware.grpc.gen.Currency,
-      middleware.grpc.gen.Price> METHOD_GET_RATES =
+  public static final io.grpc.MethodDescriptor<Currency,
+      Price> METHOD_GET_RATES =
       io.grpc.MethodDescriptor.create(
           io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING,
           generateFullMethodName(
               "routeguide.CurrencyGuide", "getRates"),
-          io.grpc.protobuf.ProtoUtils.marshaller(middleware.grpc.gen.Currency.getDefaultInstance()),
-          io.grpc.protobuf.ProtoUtils.marshaller(middleware.grpc.gen.Price.getDefaultInstance()));
+          io.grpc.protobuf.ProtoUtils.marshaller(Currency.getDefaultInstance()),
+          io.grpc.protobuf.ProtoUtils.marshaller(Price.getDefaultInstance()));
 
   /**
    * Creates a new async stub that supports all call types for the service
@@ -66,8 +58,8 @@ public final class CurrencyGuideGrpc {
 
     /**
      */
-    public io.grpc.stub.StreamObserver<middleware.grpc.gen.Currency> getRates(
-        io.grpc.stub.StreamObserver<middleware.grpc.gen.Price> responseObserver) {
+    public io.grpc.stub.StreamObserver<Currency> getRates(
+        io.grpc.stub.StreamObserver<Price> responseObserver) {
       return asyncUnimplementedStreamingCall(METHOD_GET_RATES, responseObserver);
     }
 
@@ -77,8 +69,8 @@ public final class CurrencyGuideGrpc {
             METHOD_GET_RATES,
             asyncBidiStreamingCall(
               new MethodHandlers<
-                middleware.grpc.gen.Currency,
-                middleware.grpc.gen.Price>(
+                Currency,
+                Price>(
                   this, METHODID_GET_RATES)))
           .build();
     }
@@ -104,8 +96,8 @@ public final class CurrencyGuideGrpc {
 
     /**
      */
-    public io.grpc.stub.StreamObserver<middleware.grpc.gen.Currency> getRates(
-        io.grpc.stub.StreamObserver<middleware.grpc.gen.Price> responseObserver) {
+    public io.grpc.stub.StreamObserver<Currency> getRates(
+        io.grpc.stub.StreamObserver<Price> responseObserver) {
       return asyncBidiStreamingCall(
           getChannel().newCall(METHOD_GET_RATES, getCallOptions()), responseObserver);
     }
@@ -180,7 +172,7 @@ public final class CurrencyGuideGrpc {
       switch (methodId) {
         case METHODID_GET_RATES:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.getRates(
-              (io.grpc.stub.StreamObserver<middleware.grpc.gen.Price>) responseObserver);
+              (io.grpc.stub.StreamObserver<Price>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -190,7 +182,7 @@ public final class CurrencyGuideGrpc {
   private static final class CurrencyGuideDescriptorSupplier implements io.grpc.protobuf.ProtoFileDescriptorSupplier {
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return middleware.grpc.gen.CurrencyDataProto.getDescriptor();
+      return CurrencyDataProto.getDescriptor();
     }
   }
 
