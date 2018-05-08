@@ -1,6 +1,6 @@
 module Client{
 
-enum CurrencyType { EUR = 0, USD = 1, HRK = 2, HUF = 3};
+enum CurrencyType { PLN = 0, EUR = 1, USD = 2, HRK = 3, HUF = 4};
 enum TypeOfAccount {PREMIUM, STANDARD};
 
 class CreditInfo{

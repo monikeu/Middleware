@@ -10,11 +10,13 @@ public class AccountFactoryI implements AccountFactory{
 
     @Override
     public StandardAccountPrx getAccount(String pesel, String firstName, String lastName, float income, Current current) {
-//    todo    validate income
+//    todo    validate income (czy > 0 itp)
 
         if(income >= minimumIncomeForPremium){
-            return new PremiumAccountI()
+            return (StandardAccountPrx) new PremiumAccountI(0, firstName,lastName,pesel);
         }
+        else
+            return (StandardAccountPrx) new StandardAccountI(0, firstName, lastName,pesel);
     }
 
 }

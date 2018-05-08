@@ -1,5 +1,9 @@
 package middleware.banking;
 
+import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.Identity;
+import com.zeroc.Ice.ObjectAdapter;
+import com.zeroc.Ice.Util;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
@@ -7,6 +11,7 @@ import middleware.gRPC.gen.Currency;
 import middleware.gRPC.gen.CurrencyGuideGrpc;
 import middleware.gRPC.gen.CurrencyType;
 import middleware.gRPC.gen.Price;
+import middleware.zeroIceImp.AccountFactoryI;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,6 +26,7 @@ public class BankServer {
     private final int port = 50000;
     private ManagedChannel channel;
     private StreamObserver<Currency> requestObserver;
+    private  ArrayList<CurrencyType>  myCurrencies;
 
 
     public BankServer() {
@@ -31,9 +37,9 @@ public class BankServer {
         asyncCurrencyStub = CurrencyGuideGrpc.newStub(channel);
     }
 
-    public void getRates() {
+    public void start(){
 
-        ArrayList<CurrencyType> myCurrencies = new ArrayList<>();
+        myCurrencies = new ArrayList<>();
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -51,6 +57,34 @@ public class BankServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        String bankname = "lala";
+
+        getRates();
+
+        Communicator communicator = Util.initialize();
+        ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("bankAdapter " + bankname , "default -p "+ port );
+        com.zeroc.Ice.Object zerocObject = new AccountFactoryI();
+
+//        adapter.add(zerocObject, new Identity(bankname, "bank"));
+
+        adapter.add(zerocObject,Util.stringToIdentity("accountFactory"));
+
+        adapter.activate();
+        communicator.waitForShutdown();
+
+        
+
+
+        while (true) {
+            int x = 1;
+        }
+
+    }
+
+    public void getRates() {
+
+
 
         StreamObserver<Price> responseObserver = new StreamObserver<Price>() {
             @Override
@@ -73,9 +107,7 @@ public class BankServer {
 
         myCurrencies.stream().map(currencyType -> Currency.newBuilder().setType(currencyType).build()).forEach(requestObserver::onNext);
 
-        while (true) {
-            int x = 1;
-        }
+
     }
 
     public static void main(String[] args) {
