@@ -18,78 +18,81 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class BankServer {
 
     private final CurrencyGuideGrpc.CurrencyGuideStub asyncCurrencyStub;
     private final String host = "localhost";
-    private final int port = 50000;
+    private int grpcPort = 50000;
+    private int icePort = 50005;
     private ManagedChannel channel;
     private StreamObserver<Currency> requestObserver;
-    private  ArrayList<CurrencyType>  myCurrencies;
+    private  ArrayList<CurrencyType>  myCurrencies= new ArrayList<>();
+    private ConcurrentHashMap<Client.CurrencyType, Float> myCurrencyRates = new ConcurrentHashMap<>();
+    private String bankname;
+
 
 
     public BankServer() {
         channel = ManagedChannelBuilder
-                .forAddress(host, port)
+                .forAddress(host, grpcPort)
                 .usePlaintext(true)
                 .build();
         asyncCurrencyStub = CurrencyGuideGrpc.newStub(channel);
+
+        myCurrencies.add(CurrencyType.PLN);
     }
 
     public void start(){
-
-        myCurrencies = new ArrayList<>();
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
         try {
             // todo walidacja
-            String line = " ";
 
+            System.out.println("Type  port");
+            icePort = Integer.parseInt(bufferedReader.readLine());
+
+            System.out.println("Type bank name");
+            bankname =  bufferedReader.readLine();
+
+
+            System.out.println("Type currencies, for example USD EUR separated with enter, done finishes typing");
+
+
+            String line = " ";
             line = bufferedReader.readLine();
-            while (!Objects.equals(line, "done")) {
+            while (!Objects.equals(line, "DONE")) {
                 myCurrencies.add(CurrencyType.valueOf(line));
                 line = bufferedReader.readLine();
                 line=line.replace("\n", "");
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Can't connect to the currency info server ");
         }
-
-        String bankname = "lala";
 
         getRates();
 
         Communicator communicator = Util.initialize();
-        ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("bankAdapter " + bankname , "default -p "+ port );
-        com.zeroc.Ice.Object zerocObject = new AccountFactoryI();
+        ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("bankAdapter" , "tcp -h localhost -p "+ icePort +":udp -h localhost -p "+ icePort);
+        com.zeroc.Ice.Object factory = new AccountFactoryI(myCurrencyRates);
 
-//        adapter.add(zerocObject, new Identity(bankname, "bank"));
-
-        adapter.add(zerocObject,Util.stringToIdentity("accountFactory"));
+        adapter.add(factory, new Identity(bankname, "bank"));
 
         adapter.activate();
         communicator.waitForShutdown();
-
-        
-
-
-        while (true) {
-            int x = 1;
-        }
 
     }
 
     public void getRates() {
 
-
-
         StreamObserver<Price> responseObserver = new StreamObserver<Price>() {
             @Override
             public void onNext(Price price) {
                 System.out.println("Received price of " + price.getCurrency().getType() + " it's " + price.getValue() + " now");
+                myCurrencyRates.put(Client.CurrencyType.valueOf(price.getCurrency().getType().toString()) , price.getValue());
             }
 
             @Override
@@ -107,11 +110,10 @@ public class BankServer {
 
         myCurrencies.stream().map(currencyType -> Currency.newBuilder().setType(currencyType).build()).forEach(requestObserver::onNext);
 
-
     }
 
     public static void main(String[] args) {
         BankServer bankServer = new BankServer();
-        bankServer.getRates();
+        bankServer.start();
     }
 }

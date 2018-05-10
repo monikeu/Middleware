@@ -18,36 +18,41 @@
 // </auto-generated>
 //
 
-package middleware.zerocIceGen.Client;
+package Client;
 
-public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
+public interface AccountFactoryPrx extends com.zeroc.Ice.ObjectPrx
 {
-    default float getAccountState()
+    default StandardAccountPrx getAccount(String pesel, String firstName, String lastName, float income)
     {
-        return getAccountState(com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return getAccount(pesel, firstName, lastName, income, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default float getAccountState(java.util.Map<String, String> context)
+    default StandardAccountPrx getAccount(String pesel, String firstName, String lastName, float income, java.util.Map<String, String> context)
     {
-        return _iceI_getAccountStateAsync(context, true).waitForResponse();
+        return _iceI_getAccountAsync(pesel, firstName, lastName, income, context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<java.lang.Float> getAccountStateAsync()
+    default java.util.concurrent.CompletableFuture<StandardAccountPrx> getAccountAsync(String pesel, String firstName, String lastName, float income)
     {
-        return _iceI_getAccountStateAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+        return _iceI_getAccountAsync(pesel, firstName, lastName, income, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<java.lang.Float> getAccountStateAsync(java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<StandardAccountPrx> getAccountAsync(String pesel, String firstName, String lastName, float income, java.util.Map<String, String> context)
     {
-        return _iceI_getAccountStateAsync(context, false);
+        return _iceI_getAccountAsync(pesel, firstName, lastName, income, context, false);
     }
 
-    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Float> _iceI_getAccountStateAsync(java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<StandardAccountPrx> _iceI_getAccountAsync(String iceP_pesel, String iceP_firstName, String iceP_lastName, float iceP_income, java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<java.lang.Float> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "getAccountState", null, sync, null);
-        f.invoke(true, context, null, null, istr -> {
-                     float ret;
-                     ret = istr.readFloat();
+        com.zeroc.IceInternal.OutgoingAsync<StandardAccountPrx> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "getAccount", null, sync, null);
+        f.invoke(true, context, null, ostr -> {
+                     ostr.writeString(iceP_pesel);
+                     ostr.writeString(iceP_firstName);
+                     ostr.writeString(iceP_lastName);
+                     ostr.writeFloat(iceP_income);
+                 }, istr -> {
+                     StandardAccountPrx ret;
+                     ret = StandardAccountPrx.uncheckedCast(istr.readProxy());
                      return ret;
                  });
         return f;
@@ -59,9 +64,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @param obj The untyped proxy.
      * @return A proxy for this type, or null if the object does not support this type.
      **/
-    static StandardAccountPrx checkedCast(com.zeroc.Ice.ObjectPrx obj)
+    static AccountFactoryPrx checkedCast(com.zeroc.Ice.ObjectPrx obj)
     {
-        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, ice_staticId(), StandardAccountPrx.class, _StandardAccountPrxI.class);
+        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, ice_staticId(), AccountFactoryPrx.class, _AccountFactoryPrxI.class);
     }
 
     /**
@@ -71,9 +76,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @param context The Context map to send with the invocation.
      * @return A proxy for this type, or null if the object does not support this type.
      **/
-    static StandardAccountPrx checkedCast(com.zeroc.Ice.ObjectPrx obj, java.util.Map<String, String> context)
+    static AccountFactoryPrx checkedCast(com.zeroc.Ice.ObjectPrx obj, java.util.Map<String, String> context)
     {
-        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, context, ice_staticId(), StandardAccountPrx.class, _StandardAccountPrxI.class);
+        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, context, ice_staticId(), AccountFactoryPrx.class, _AccountFactoryPrxI.class);
     }
 
     /**
@@ -83,9 +88,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @param facet The name of the desired facet.
      * @return A proxy for this type, or null if the object does not support this type.
      **/
-    static StandardAccountPrx checkedCast(com.zeroc.Ice.ObjectPrx obj, String facet)
+    static AccountFactoryPrx checkedCast(com.zeroc.Ice.ObjectPrx obj, String facet)
     {
-        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, facet, ice_staticId(), StandardAccountPrx.class, _StandardAccountPrxI.class);
+        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, facet, ice_staticId(), AccountFactoryPrx.class, _AccountFactoryPrxI.class);
     }
 
     /**
@@ -96,9 +101,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @param context The Context map to send with the invocation.
      * @return A proxy for this type, or null if the object does not support this type.
      **/
-    static StandardAccountPrx checkedCast(com.zeroc.Ice.ObjectPrx obj, String facet, java.util.Map<String, String> context)
+    static AccountFactoryPrx checkedCast(com.zeroc.Ice.ObjectPrx obj, String facet, java.util.Map<String, String> context)
     {
-        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, facet, context, ice_staticId(), StandardAccountPrx.class, _StandardAccountPrxI.class);
+        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, facet, context, ice_staticId(), AccountFactoryPrx.class, _AccountFactoryPrxI.class);
     }
 
     /**
@@ -106,9 +111,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @param obj The untyped proxy.
      * @return A proxy for this type.
      **/
-    static StandardAccountPrx uncheckedCast(com.zeroc.Ice.ObjectPrx obj)
+    static AccountFactoryPrx uncheckedCast(com.zeroc.Ice.ObjectPrx obj)
     {
-        return com.zeroc.Ice.ObjectPrx._uncheckedCast(obj, StandardAccountPrx.class, _StandardAccountPrxI.class);
+        return com.zeroc.Ice.ObjectPrx._uncheckedCast(obj, AccountFactoryPrx.class, _AccountFactoryPrxI.class);
     }
 
     /**
@@ -117,9 +122,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @param facet The name of the desired facet.
      * @return A proxy for this type.
      **/
-    static StandardAccountPrx uncheckedCast(com.zeroc.Ice.ObjectPrx obj, String facet)
+    static AccountFactoryPrx uncheckedCast(com.zeroc.Ice.ObjectPrx obj, String facet)
     {
-        return com.zeroc.Ice.ObjectPrx._uncheckedCast(obj, facet, StandardAccountPrx.class, _StandardAccountPrxI.class);
+        return com.zeroc.Ice.ObjectPrx._uncheckedCast(obj, facet, AccountFactoryPrx.class, _AccountFactoryPrxI.class);
     }
 
     /**
@@ -128,9 +133,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified per-proxy context.
      **/
     @Override
-    default StandardAccountPrx ice_context(java.util.Map<String, String> newContext)
+    default AccountFactoryPrx ice_context(java.util.Map<String, String> newContext)
     {
-        return (StandardAccountPrx)_ice_context(newContext);
+        return (AccountFactoryPrx)_ice_context(newContext);
     }
 
     /**
@@ -139,9 +144,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified adapter ID.
      **/
     @Override
-    default StandardAccountPrx ice_adapterId(String newAdapterId)
+    default AccountFactoryPrx ice_adapterId(String newAdapterId)
     {
-        return (StandardAccountPrx)_ice_adapterId(newAdapterId);
+        return (AccountFactoryPrx)_ice_adapterId(newAdapterId);
     }
 
     /**
@@ -150,9 +155,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified endpoints.
      **/
     @Override
-    default StandardAccountPrx ice_endpoints(com.zeroc.Ice.Endpoint[] newEndpoints)
+    default AccountFactoryPrx ice_endpoints(com.zeroc.Ice.Endpoint[] newEndpoints)
     {
-        return (StandardAccountPrx)_ice_endpoints(newEndpoints);
+        return (AccountFactoryPrx)_ice_endpoints(newEndpoints);
     }
 
     /**
@@ -161,9 +166,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified locator cache timeout.
      **/
     @Override
-    default StandardAccountPrx ice_locatorCacheTimeout(int newTimeout)
+    default AccountFactoryPrx ice_locatorCacheTimeout(int newTimeout)
     {
-        return (StandardAccountPrx)_ice_locatorCacheTimeout(newTimeout);
+        return (AccountFactoryPrx)_ice_locatorCacheTimeout(newTimeout);
     }
 
     /**
@@ -172,9 +177,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified invocation timeout.
      **/
     @Override
-    default StandardAccountPrx ice_invocationTimeout(int newTimeout)
+    default AccountFactoryPrx ice_invocationTimeout(int newTimeout)
     {
-        return (StandardAccountPrx)_ice_invocationTimeout(newTimeout);
+        return (AccountFactoryPrx)_ice_invocationTimeout(newTimeout);
     }
 
     /**
@@ -183,9 +188,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified caching policy.
      **/
     @Override
-    default StandardAccountPrx ice_connectionCached(boolean newCache)
+    default AccountFactoryPrx ice_connectionCached(boolean newCache)
     {
-        return (StandardAccountPrx)_ice_connectionCached(newCache);
+        return (AccountFactoryPrx)_ice_connectionCached(newCache);
     }
 
     /**
@@ -194,9 +199,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified endpoint selection policy.
      **/
     @Override
-    default StandardAccountPrx ice_endpointSelection(com.zeroc.Ice.EndpointSelectionType newType)
+    default AccountFactoryPrx ice_endpointSelection(com.zeroc.Ice.EndpointSelectionType newType)
     {
-        return (StandardAccountPrx)_ice_endpointSelection(newType);
+        return (AccountFactoryPrx)_ice_endpointSelection(newType);
     }
 
     /**
@@ -207,9 +212,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified selection policy.
      **/
     @Override
-    default StandardAccountPrx ice_secure(boolean b)
+    default AccountFactoryPrx ice_secure(boolean b)
     {
-        return (StandardAccountPrx)_ice_secure(b);
+        return (AccountFactoryPrx)_ice_secure(b);
     }
 
     /**
@@ -218,9 +223,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified encoding version.
      **/
     @Override
-    default StandardAccountPrx ice_encodingVersion(com.zeroc.Ice.EncodingVersion e)
+    default AccountFactoryPrx ice_encodingVersion(com.zeroc.Ice.EncodingVersion e)
     {
-        return (StandardAccountPrx)_ice_encodingVersion(e);
+        return (AccountFactoryPrx)_ice_encodingVersion(e);
     }
 
     /**
@@ -231,9 +236,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified selection policy.
      **/
     @Override
-    default StandardAccountPrx ice_preferSecure(boolean b)
+    default AccountFactoryPrx ice_preferSecure(boolean b)
     {
-        return (StandardAccountPrx)_ice_preferSecure(b);
+        return (AccountFactoryPrx)_ice_preferSecure(b);
     }
 
     /**
@@ -242,9 +247,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified router.
      **/
     @Override
-    default StandardAccountPrx ice_router(com.zeroc.Ice.RouterPrx router)
+    default AccountFactoryPrx ice_router(com.zeroc.Ice.RouterPrx router)
     {
-        return (StandardAccountPrx)_ice_router(router);
+        return (AccountFactoryPrx)_ice_router(router);
     }
 
     /**
@@ -253,9 +258,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified locator.
      **/
     @Override
-    default StandardAccountPrx ice_locator(com.zeroc.Ice.LocatorPrx locator)
+    default AccountFactoryPrx ice_locator(com.zeroc.Ice.LocatorPrx locator)
     {
-        return (StandardAccountPrx)_ice_locator(locator);
+        return (AccountFactoryPrx)_ice_locator(locator);
     }
 
     /**
@@ -264,9 +269,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified collocation optimization.
      **/
     @Override
-    default StandardAccountPrx ice_collocationOptimized(boolean b)
+    default AccountFactoryPrx ice_collocationOptimized(boolean b)
     {
-        return (StandardAccountPrx)_ice_collocationOptimized(b);
+        return (AccountFactoryPrx)_ice_collocationOptimized(b);
     }
 
     /**
@@ -274,9 +279,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy that uses twoway invocations.
      **/
     @Override
-    default StandardAccountPrx ice_twoway()
+    default AccountFactoryPrx ice_twoway()
     {
-        return (StandardAccountPrx)_ice_twoway();
+        return (AccountFactoryPrx)_ice_twoway();
     }
 
     /**
@@ -284,9 +289,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy that uses oneway invocations.
      **/
     @Override
-    default StandardAccountPrx ice_oneway()
+    default AccountFactoryPrx ice_oneway()
     {
-        return (StandardAccountPrx)_ice_oneway();
+        return (AccountFactoryPrx)_ice_oneway();
     }
 
     /**
@@ -294,9 +299,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy that uses batch oneway invocations.
      **/
     @Override
-    default StandardAccountPrx ice_batchOneway()
+    default AccountFactoryPrx ice_batchOneway()
     {
-        return (StandardAccountPrx)_ice_batchOneway();
+        return (AccountFactoryPrx)_ice_batchOneway();
     }
 
     /**
@@ -304,9 +309,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy that uses datagram invocations.
      **/
     @Override
-    default StandardAccountPrx ice_datagram()
+    default AccountFactoryPrx ice_datagram()
     {
-        return (StandardAccountPrx)_ice_datagram();
+        return (AccountFactoryPrx)_ice_datagram();
     }
 
     /**
@@ -314,9 +319,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy that uses batch datagram invocations.
      **/
     @Override
-    default StandardAccountPrx ice_batchDatagram()
+    default AccountFactoryPrx ice_batchDatagram()
     {
-        return (StandardAccountPrx)_ice_batchDatagram();
+        return (AccountFactoryPrx)_ice_batchDatagram();
     }
 
     /**
@@ -325,9 +330,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified compression setting.
      **/
     @Override
-    default StandardAccountPrx ice_compress(boolean co)
+    default AccountFactoryPrx ice_compress(boolean co)
     {
-        return (StandardAccountPrx)_ice_compress(co);
+        return (AccountFactoryPrx)_ice_compress(co);
     }
 
     /**
@@ -336,9 +341,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified timeout.
      **/
     @Override
-    default StandardAccountPrx ice_timeout(int t)
+    default AccountFactoryPrx ice_timeout(int t)
     {
-        return (StandardAccountPrx)_ice_timeout(t);
+        return (AccountFactoryPrx)_ice_timeout(t);
     }
 
     /**
@@ -347,9 +352,9 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified connection ID.
      **/
     @Override
-    default StandardAccountPrx ice_connectionId(String connectionId)
+    default AccountFactoryPrx ice_connectionId(String connectionId)
     {
-        return (StandardAccountPrx)_ice_connectionId(connectionId);
+        return (AccountFactoryPrx)_ice_connectionId(connectionId);
     }
 
     /**
@@ -358,13 +363,13 @@ public interface StandardAccountPrx extends com.zeroc.Ice.ObjectPrx
      * @return A fixed proxy bound to the given connection.
      **/
     @Override
-    default StandardAccountPrx ice_fixed(com.zeroc.Ice.Connection connection)
+    default AccountFactoryPrx ice_fixed(com.zeroc.Ice.Connection connection)
     {
-        return (StandardAccountPrx)_ice_fixed(connection);
+        return (AccountFactoryPrx)_ice_fixed(connection);
     }
 
     static String ice_staticId()
     {
-        return "::Client::StandardAccount";
+        return "::Client::AccountFactory";
     }
 }

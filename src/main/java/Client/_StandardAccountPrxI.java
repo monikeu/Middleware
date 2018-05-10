@@ -18,9 +18,9 @@
 // </auto-generated>
 //
 
-package middleware.zerocIceGen.Client;
+package Client;
 
-public class _AccountFactoryPrxI extends com.zeroc.Ice._ObjectPrxI implements AccountFactoryPrx
+public class _StandardAccountPrxI extends com.zeroc.Ice._ObjectPrxI implements StandardAccountPrx
 {
     public static final long serialVersionUID = 0L;
 }

@@ -18,15 +18,16 @@
 // </auto-generated>
 //
 
-package middleware.zerocIceGen.Client;
+package Client;
 
-public interface AccountFactory extends com.zeroc.Ice.Object
+public interface PremiumAccount extends StandardAccount
 {
-    StandardAccountPrx getAccount(String pesel, String firstName, String lastName, float income, com.zeroc.Ice.Current current);
+    CreditInfo getCredit(CurrencyType desiredCurrency, float desiredAmount, CreditDateRange creditDateRange, com.zeroc.Ice.Current current);
 
     static final String[] _iceIds =
     {
-        "::Client::AccountFactory",
+        "::Client::PremiumAccount",
+        "::Client::StandardAccount",
         "::Ice::Object"
     };
 
@@ -44,32 +45,34 @@ public interface AccountFactory extends com.zeroc.Ice.Object
 
     static String ice_staticId()
     {
-        return "::Client::AccountFactory";
+        return "::Client::PremiumAccount";
     }
 
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_getAccount(AccountFactory obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_getCredit(PremiumAccount obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
     {
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
         com.zeroc.Ice.InputStream istr = inS.startReadParams();
-        String iceP_pesel;
-        String iceP_firstName;
-        String iceP_lastName;
-        float iceP_income;
-        iceP_pesel = istr.readString();
-        iceP_firstName = istr.readString();
-        iceP_lastName = istr.readString();
-        iceP_income = istr.readFloat();
+        CurrencyType iceP_desiredCurrency;
+        float iceP_desiredAmount;
+        final com.zeroc.IceInternal.Holder<CreditDateRange> icePP_creditDateRange = new com.zeroc.IceInternal.Holder<>();
+        iceP_desiredCurrency = CurrencyType.ice_read(istr);
+        iceP_desiredAmount = istr.readFloat();
+        istr.readValue(v -> icePP_creditDateRange.value = v, CreditDateRange.class);
+        istr.readPendingValues();
         inS.endReadParams();
-        StandardAccountPrx ret = obj.getAccount(iceP_pesel, iceP_firstName, iceP_lastName, iceP_income, current);
+        CreditDateRange iceP_creditDateRange = icePP_creditDateRange.value;
+        CreditInfo ret = obj.getCredit(iceP_desiredCurrency, iceP_desiredAmount, iceP_creditDateRange, current);
         com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
-        ostr.writeProxy(ret);
+        ostr.writeValue(ret);
+        ostr.writePendingValues();
         inS.endWriteParams(ostr);
         return inS.setResult(ostr);
     }
 
     final static String[] _iceOps =
     {
-        "getAccount",
+        "getAccountState",
+        "getCredit",
         "ice_id",
         "ice_ids",
         "ice_isA",
@@ -90,21 +93,25 @@ public interface AccountFactory extends com.zeroc.Ice.Object
         {
             case 0:
             {
-                return _iceD_getAccount(this, in, current);
+                return StandardAccount._iceD_getAccountState(this, in, current);
             }
             case 1:
             {
-                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
+                return _iceD_getCredit(this, in, current);
             }
             case 2:
             {
-                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
             }
             case 3:
             {
-                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
             }
             case 4:
+            {
+                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
+            }
+            case 5:
             {
                 return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
             }

@@ -39,11 +39,12 @@ if 'CurrencyType' not in _M_Client.__dict__:
             return None
         valueOf = classmethod(valueOf)
 
-    CurrencyType.EUR = CurrencyType("EUR", 0)
-    CurrencyType.USD = CurrencyType("USD", 1)
-    CurrencyType.HRK = CurrencyType("HRK", 2)
-    CurrencyType.HUF = CurrencyType("HUF", 3)
-    CurrencyType._enumerators = { 0:CurrencyType.EUR, 1:CurrencyType.USD, 2:CurrencyType.HRK, 3:CurrencyType.HUF }
+    CurrencyType.PLN = CurrencyType("PLN", 0)
+    CurrencyType.EUR = CurrencyType("EUR", 1)
+    CurrencyType.USD = CurrencyType("USD", 2)
+    CurrencyType.HRK = CurrencyType("HRK", 3)
+    CurrencyType.HUF = CurrencyType("HUF", 4)
+    CurrencyType._enumerators = { 0:CurrencyType.PLN, 1:CurrencyType.EUR, 2:CurrencyType.USD, 3:CurrencyType.HRK, 4:CurrencyType.HUF }
 
     _M_Client._t_CurrencyType = IcePy.defineEnum('::Client::CurrencyType', CurrencyType, (), CurrencyType._enumerators)
 
@@ -75,7 +76,7 @@ if 'TypeOfAccount' not in _M_Client.__dict__:
 if 'CreditInfo' not in _M_Client.__dict__:
     _M_Client.CreditInfo = Ice.createTempClass()
     class CreditInfo(Ice.Value):
-        def __init__(self, currency=_M_Client.CurrencyType.EUR, ratePerMonth=0.0):
+        def __init__(self, currency=_M_Client.CurrencyType.PLN, ratePerMonth=0.0):
             self.currency = currency
             self.ratePerMonth = ratePerMonth
 

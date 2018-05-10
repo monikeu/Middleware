@@ -18,7 +18,7 @@
 // </auto-generated>
 //
 
-package middleware.zerocIceGen.Client;
+package Client;
 
 public enum TypeOfAccount implements java.io.Serializable
 {

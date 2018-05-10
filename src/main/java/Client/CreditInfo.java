@@ -18,32 +18,33 @@
 // </auto-generated>
 //
 
-package middleware.zerocIceGen.Client;
+package Client;
 
-public class CreditDateRange extends com.zeroc.Ice.Value
+public class CreditInfo extends com.zeroc.Ice.Value
 {
-    public CreditDateRange()
+    public CreditInfo()
     {
+        this.currency = CurrencyType.PLN;
     }
 
-    public CreditDateRange(short month, short year)
+    public CreditInfo(CurrencyType currency, float ratePerMonth)
     {
-        this.month = month;
-        this.year = year;
+        this.currency = currency;
+        this.ratePerMonth = ratePerMonth;
     }
 
-    public short month;
+    public CurrencyType currency;
 
-    public short year;
+    public float ratePerMonth;
 
-    public CreditDateRange clone()
+    public CreditInfo clone()
     {
-        return (CreditDateRange)super.clone();
+        return (CreditInfo)super.clone();
     }
 
     public static String ice_staticId()
     {
-        return "::Client::CreditDateRange";
+        return "::Client::CreditInfo";
     }
 
     @Override
@@ -52,14 +53,14 @@ public class CreditDateRange extends com.zeroc.Ice.Value
         return ice_staticId();
     }
 
-    public static final long serialVersionUID = 774481265L;
+    public static final long serialVersionUID = 235646681L;
 
     @Override
     protected void _iceWriteImpl(com.zeroc.Ice.OutputStream ostr_)
     {
         ostr_.startSlice(ice_staticId(), -1, true);
-        ostr_.writeShort(month);
-        ostr_.writeShort(year);
+        CurrencyType.ice_write(ostr_, currency);
+        ostr_.writeFloat(ratePerMonth);
         ostr_.endSlice();
     }
 
@@ -67,8 +68,8 @@ public class CreditDateRange extends com.zeroc.Ice.Value
     protected void _iceReadImpl(com.zeroc.Ice.InputStream istr_)
     {
         istr_.startSlice();
-        month = istr_.readShort();
-        year = istr_.readShort();
+        currency = CurrencyType.ice_read(istr_);
+        ratePerMonth = istr_.readFloat();
         istr_.endSlice();
     }
 }

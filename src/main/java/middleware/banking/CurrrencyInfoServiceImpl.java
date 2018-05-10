@@ -29,9 +29,7 @@ public class CurrrencyInfoServiceImpl extends CurrencyGuideGrpc.CurrencyGuideImp
     }
 
     private void initializeBanksMap() {
-        for (CurrencyType c : CurrencyType.values()
-
-                ) {
+        for (CurrencyType c : CurrencyType.values()) {
             if (c != CurrencyType.UNRECOGNIZED) {
                 banksInterestedIn.put(c, new HashSet<>());
             }
@@ -44,7 +42,7 @@ public class CurrrencyInfoServiceImpl extends CurrencyGuideGrpc.CurrencyGuideImp
                 currencyRates.put(currency, random.nextFloat() * (maxX - minX) + minX);
         }
 
-        currencyRates.put(CurrencyType.PLN, 0.0f);
+        currencyRates.put(CurrencyType.PLN, 1.0f);
     }
 
     @Override
@@ -52,8 +50,7 @@ public class CurrrencyInfoServiceImpl extends CurrencyGuideGrpc.CurrencyGuideImp
         return new StreamObserver<Currency>() {
             @Override
             public void onNext(Currency value) {
-                // todo opis requestu
-                System.out.println("Received request");
+                System.out.println("Received request for " + value.getType() + " sending answer");
                 responseObserver.onNext(getPrice(value));
                 banksInterestedIn.get(value.getType()).add(responseObserver);
             }
@@ -82,7 +79,7 @@ public class CurrrencyInfoServiceImpl extends CurrencyGuideGrpc.CurrencyGuideImp
 
             while (true) {
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(15000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     System.out.println("Randomizer thread was intterupted");
@@ -96,27 +93,30 @@ public class CurrrencyInfoServiceImpl extends CurrencyGuideGrpc.CurrencyGuideImp
                         notifyBanks(currencyType);
                         System.out.println("Randomized " + currencyType + " now it's " + currencyRates.get(currencyType));
                     }
-
                 }
 
                 System.out.println(currencyRates);
-
             }
 
         }
     }
 
     private void notifyBanks(CurrencyType currencyType) {
-        for (StreamObserver<Price> bank :
-                banksInterestedIn.get(currencyType)) {
-            Float aFloat = currencyRates.get(currencyType);
-            Price result = Price
-                    .newBuilder()
-                    .setCurrency(Currency
-                            .newBuilder()
-                            .setType(currencyType))
-                    .setValue(aFloat).build();
-            bank.onNext(result);
+
+        try {
+            for (StreamObserver<Price> bank :
+                    banksInterestedIn.get(currencyType)) {
+                Float aFloat = currencyRates.get(currencyType);
+                Price result = Price
+                        .newBuilder()
+                        .setCurrency(Currency
+                                .newBuilder()
+                                .setType(currencyType))
+                        .setValue(aFloat).build();
+                bank.onNext(result);
+            }
+        }catch (io.grpc.StatusRuntimeException e){
+            System.out.println("Connection with the bank failed");
         }
     }
 }

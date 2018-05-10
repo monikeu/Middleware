@@ -18,14 +18,15 @@
 // </auto-generated>
 //
 
-package middleware.zerocIceGen.Client;
+package Client;
 
 public enum CurrencyType implements java.io.Serializable
 {
-    EUR(0),
-    USD(1),
-    HRK(2),
-    HUF(3);
+    PLN(0),
+    EUR(1),
+    USD(2),
+    HRK(3),
+    HUF(4);
 
     public int value()
     {
@@ -37,12 +38,14 @@ public enum CurrencyType implements java.io.Serializable
         switch(v)
         {
         case 0:
-            return EUR;
+            return PLN;
         case 1:
-            return USD;
+            return EUR;
         case 2:
-            return HRK;
+            return USD;
         case 3:
+            return HRK;
+        case 4:
             return HUF;
         }
         return null;
@@ -55,24 +58,24 @@ public enum CurrencyType implements java.io.Serializable
 
     public void ice_write(com.zeroc.Ice.OutputStream ostr)
     {
-        ostr.writeEnum(_value, 3);
+        ostr.writeEnum(_value, 4);
     }
 
     public static void ice_write(com.zeroc.Ice.OutputStream ostr, CurrencyType v)
     {
         if(v == null)
         {
-            ostr.writeEnum(Client.CurrencyType.EUR.value(), 3);
+            ostr.writeEnum(Client.CurrencyType.PLN.value(), 4);
         }
         else
         {
-            ostr.writeEnum(v.value(), 3);
+            ostr.writeEnum(v.value(), 4);
         }
     }
 
     public static CurrencyType ice_read(com.zeroc.Ice.InputStream istr)
     {
-        int v = istr.readEnum(3);
+        int v = istr.readEnum(4);
         return validate(v);
     }
 
